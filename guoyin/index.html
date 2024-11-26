@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XX音乐学院建校60周年庆典音乐会</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* 开场动画 */
+        .intro-animation {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #1a1a1a, #4a4a4a);
+            color: white;
+            font-size: 2.5rem;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        /* 主视觉区域 */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 导航按钮 */
+        .nav-buttons {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        .nav-button {
+            display: block;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: transform 0.3s;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        .nav-button:hover {
+            transform: scale(1.5);
+        }
+
+        /* 节目单区域 */
+        .program {
+            padding: 4rem 2rem;
+            background: #fff;
+        }
+
+        .program-item {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-left: 4px solid #d4af37;
+            background: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* 艺术家介绍区域 */
+        .artists {
+            padding: 4rem 2rem;
+            background: #f5f5f5;
+        }
+
+        .artist-card {
+            display: flex;
+            margin-bottom: 2rem;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem;
+        }
+
+        .artist-info {
+            padding: 1rem;
+        }
+
+        /* 添加section通用样式 */
+        section {
+            padding: 4rem 2rem;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+
+        /* 添加占位图片样式 */
+        .artist-card img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            background: #eee;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .artist-card {
+                flex-direction: column;
+            }
+            
+            .nav-buttons {
+                display: none;
+            }
+
+            .artist-card img {
+                width: 100%;
+                height: 300px;
+            }
+        }
+
+        /* 添加新的样式 */
+        .program-section {
+            margin-bottom: 3rem;
+        }
+
+        .program-section h3 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #d4af37;
+        }
+
+        .program-item {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-left: 4px solid #d4af37;
+            background: #fff;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .program-item:hover {
+            transform: translateX(10px);
+        }
+
+        .program-details h4 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .program-details p {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .program-desc {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #eee;
+            color: #888;
+            font-style: italic;
+        }
+
+        .finale {
+            background: linear-gradient(to right, #fff, #f8f4e5);
+            border-left: 4px solid #c0392b;
+        }
+
+        /* 精彩片段回顾样式 */
+        .highlights {
+            background: #f9f9f9;
+            padding: 4rem 2rem;
+        }
+
+        .highlights-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .highlight-item {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            background: #000;
+            cursor: pointer;
+        }
+
+        .placeholder-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            background: rgba(255,255,255,1);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        /* 学院历史时间线样式 */
+        .history {
+            background: #fff;
+            padding: 4rem 2rem;
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: #d4af37;
+        }
+
+        .timeline-item {
+            margin: 2rem 0;
+            position: relative;
+            width: 50%;
+            padding: 0 2rem;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-date {
+            position: absolute;
+            top: 0;
+            right: -100px;
+            background: #d4af37;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-date {
+            left: -100px;
+            right: auto;
+        }
+
+        /* 互动区域样式 */
+        .interaction {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 4rem 2rem;
+        }
+
+        .interaction-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .wish-form textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-wish {
+            background: #d4af37;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-wish:hover {
+            background: #c19b2e;
+            transform: translateY(-2px);
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .share-btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .share-btn.wechat {
+            background: #07c160;
+            color: white;
+        }
+
+        .share-btn.weibo {
+            background: #e6162d;
+            color: white;
+        }
+
+        /* 响应式设计补充 */
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 0;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                padding-left: 2rem;
+            }
+            
+            .timeline-date {
+                left: 2rem !important;
+                right: auto !important;
+                top: -2rem !important;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* 添加新的样式 */
+        /* 艺术家卡片网格布局 */
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 0 1rem;
+        }
+
+        .artist-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .artist-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .artist-card:hover .artist-overlay {
+            opacity: 1;
+        }
+
+        .view-more {
+            color: white;
+            padding: 0.5rem 1rem;
+            border: 2px solid white;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* 页脚样式 */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .social-link {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: #d4af37;
+        }
+
+        .footer-bottom {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        /* 添加动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .program-item, .artist-card, .timeline-item {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .program-item:nth-child(n), .artist-card:nth-child(n), .timeline-item:nth-child(n) {
+            animation-delay: calc(n * 0.2s);
+        }
+    </style>
+</head>
+<body>
+    <!-- 开场动画 -->
+    <div class="intro-animation">
+        <div class="animation-content">
+            <h1>XX音乐学院</h1>
+            <p>建校60周年庆典音乐会</p>
+        </div>
+    </div>
+
+    <!-- 主视觉区域 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>XX音乐学院建校60周年庆典音乐会</h1>
+            <p>传承艺术精神 展望音乐未来</p>
+        </div>
+    </section>
+
+    <!-- 快速导航 -->
+    <nav class="nav-buttons">
+        <div class="nav-button" data-section="program"></div>
+        <div class="nav-button" data-section="artists"></div>
+        <div class="nav-button" data-section="highlights"></div>
+        <div class="nav-button" data-section="history"></div>
+    </nav>
+
+    <!-- 节目单 -->
+    <section id="program" class="program">
+        <h2>音乐会节目单</h2>
+        
+        <!-- 上半场 -->
+        <div class="program-section">
+            <h3>上半场</h3>
+            <div class="program-item">
+                <div class="program-details">
+                    <h4>《节日序曲》</h4>
+                    <p>作曲：施万春</p>
+                    <p>编配：罗麦朔</p>
+                    <p>演奏：中国音乐学院民族乐团</p>
+                    <p>指挥：许知俊</p>
+                    <div class="program-desc">
+                        中国民族管弦乐经典保留曲目，充满浓郁的民族特色和节庆气氛。
+                    </div>
+                </div>
+            </div>
+
+            <div class="program-item">
+                <div class="program-details">
+                    <h4>《兄妹开荒》</h4>
+                    <p>作曲：安波（中国音乐学院首任院长）</p>
+                    <p>演唱：李琳、马小明</p>
+                    <div class="program-desc">
+                        秧歌剧作品，展现劳动人民开荒拓土的坚韧精神。
+                    </div>
+                </div>
+            </div>
+
+            <div class="program-item">
+                <div class="program-details">
+                    <h4>《夜深沉》</h4>
+                    <p>演奏：沈诚、张尊连（胡琴）</p>
+                    <div class="program-desc">
+                        京剧音乐改编，展现京剧音乐的独特魅力。
+                    </div>
+                </div>
+            </div>
+
+            <!-- 继续添加其他节目... -->
+        </div>
+
+        <!-- 下半场 -->
+        <div class="program-section">
+            <h3>下半场</h3>
+            <div class="program-item">
+                <div class="program-details">
+                    <h4>《中国故事》第一乐章</h4>
+                    <p>作曲：张小夫</p>
+                    <p>演奏：张倩渊（唢呐）、晏璐婷（板胡）</p>
+                    <div class="program-desc">
+                        以民间音乐曲调为创作元素，巧妙运用唢呐与板胡的独特音色，奏响融合传统与现代的华彩乐章。
+                    </div>
+                </div>
+            </div>
+
+            <div class="program-item">
+                <div class="program-details">
+                    <h4>《送上我心头的思念》</h4>
+                    <p>作曲：施万春</p>
+                    <p>演唱：丁毅</p>
+                    <div class="program-desc">
+                        深情缅怀周恩来总理，抒发对这位伟人的无限思念之情。
+                    </div>
+                </div>
+            </div>
+
+            <div class="program-item">
+                <div class="program-details">
+                    <h4>《南音随想》</h4>
+                    <p>作曲：刘青</p>
+                    <p>指挥：金野</p>
+                    <div class="program-desc">
+                        通过交响乐的形式重新演绎古老南音，融合传统与现代元素。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 终曲 -->
+        <div class="program-item finale">
+            <div class="program-details">
+                <h4>《领航》与《生日歌》</h4>
+                <p>指挥：李心草</p>
+                <p>全场齐唱</p>
+                <div class="program-desc">
+                    音乐会最后以全场齐唱《领航》和《生日歌》达到最高潮，共同庆祝中国音乐学院建校60周年。
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 艺术家介绍 -->
+    <section id="artists" class="artists">
+        <h2>艺术家介绍</h2>
+        <div class="artists-grid">
+            <div class="artist-card">
+                <div class="artist-image">
+                    <img src="artist1.jpg" alt="李心草">
+                    <div class="artist-overlay">
+                        <span class="view-more">查看详情</span>
+                    </div>
+                </div>
+                <div class="artist-info">
+                    <h3>李心草</h3>
+                    <p class="artist-title">指挥家 | 中国音乐学院院长</p>
+                    <div class="artist-details">
+                        <p>主要成就：国家一级指挥</p>
+                        <p>代表作品：《红旗颂》《领航》等</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="artist-card">
+                <div class="artist-image">
+                    <img src="artist2.jpg" alt="金野">
+                    <div class="artist-overlay">
+                        <span class="view-more">查看详情</span>
+                    </div>
+                </div>
+                <div class="artist-info">
+                    <h3>金野</h3>
+                    <p class="artist-title">指挥家</p>
+                    <div class="artist-details">
+                        <p>主要成就：著名指挥家</p>
+                        <p>代表作品：《南音随想》等</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 精彩片段回顾 -->
+    <section id="highlights" class="highlights">
+        <h2>精彩片段回顾</h2>
+        <div class="highlights-container">
+            <div class="highlight-item">
+                <div class="video-container">
+                    <img src="rehearsal1.jpg" alt="排练花絮" class="placeholder-img">
+                    <div class="play-button">▶</div>
+                </div>
+                <div class="highlight-info">
+                    <h3>排练花絮</h3>
+                    <p>艺术家们认真排练的精彩瞬间</p>
+                </div>
+            </div>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="concert1.jpg" alt="音乐会现场" class="gallery-img">
+                    <div class="gallery-caption">开幕盛况</div>
+                </div>
+                <!-- 更多图片... -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 学院历史 -->
+    <section id="history" class="history">
+        <h2>甲子华章</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">1964</div>
+                <div class="timeline-content">
+                    <h3>学院成立</h3>
+                    <p>在周恩来总理的倡导下正式成立</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2024</div>
+                <div class="timeline-content">
+                    <h3>甲子华诞</h3>
+                    <p>建校60周年，再谱新章</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 互动区域 -->
+    <section id="interaction" class="interaction">
+        <h2>互动专区</h2>
+        <div class="interaction-container">
+            <div class="wish-wall">
+                <h3>祝福寄语</h3>
+                <div class="wish-form">
+                    <textarea placeholder="写下您的祝福..."></textarea>
+                    <button class="submit-wish">发送祝福</button>
+                </div>
+                <div class="wishes-display">
+                    <!-- 祝福墙内容将通过JS动态生成 -->
+                </div>
+            </div>
+            <div class="share-section">
+                <h3>分享</h3>
+                <div class="share-buttons">
+                    <button class="share-btn wechat">微信</button>
+                    <button class="share-btn weibo">微博</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 添加页脚部分 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>关于我们</h4>
+                <p>中国音乐学院创建于1964年，是我国最高等级的音乐专业学府之一。</p>
+            </div>
+            <div class="footer-section">
+                <h4>联系方式</h4>
+                <p>地址：北京市朝阳区安翔路1号</p>
+                <p>电话：010-XXXXXXXX</p>
+                <p>邮箱：ccm_net@126.com</p>
+            </div>
+            <div class="footer-section">
+                <h4>关注我们</h4>
+                <div class="social-links">
+                    <a href="#" class="social-link">官方网站</a>
+                    <a href="#" class="social-link">官方微博</a>
+                    <a href="#" class="social-link">微信公众号</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 中国音乐学院 版权所有</p>
+        </div>
+    </footer>
+
+    <script>
+        // 修改开场动画逻辑
+        setTimeout(() => {
+            const intro = document.querySelector('.intro-animation');
+            intro.style.opacity = '0';
+            intro.style.visibility = 'hidden';
+            intro.style.transition = 'opacity 1s ease-out';
+            setTimeout(() => {
+                intro.style.display = 'none';
+            }, 1000);
+        }, 3000);
+
+        // 平滑滚动导航
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const section = button.dataset.section;
+                document.getElementById(section).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 添加祝福墙功能
+        document.querySelector('.submit-wish')?.addEventListener('click', function() {
+            const wishText = document.querySelector('.wish-form textarea').value;
+            if (wishText.trim()) {
+                const wishElement = document.createElement('div');
+                wishElement.className = 'wish-item';
+                wishElement.innerHTML = `
+                    <p>${wishText}</p>
+                    <span class="wish-time">${new Date().toLocaleString()}</span>
+                `;
+                document.querySelector('.wishes-display').prepend(wishElement);
+                document.querySelector('.wish-form textarea').value = '';
+            }
+        });
+
+        // 分享功能
+        document.querySelectorAll('.share-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // 这里可以添加实际的分享功能
+                alert('分享功能开发中...');
+            });
+        });
+    </script>
+</body>
+</html> 
